@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>E-Mine Home | Shop For More</title>
+      <link rel="stylesheet" href="css/style.css" />
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+  </head>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #10B981;
+      }
+      h1 {
+          text-align: center;
+          margin: 20px 0;
+      }
+      .products-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+          padding: 20px 0;
+      }
+      .product-card {
+          background: white;
+          border: 1px solid #e0e0e0;
+          border-radius: 5px;
+          padding: 15px;
+          text-align: center;
+          transition: box-shadow 0.3s;
+      }
+      .product-card img {
+          max-width: 100%;
+          height: 300px;
+      }
+      .product-card h2 {
+          font-size: 18px;
+          margin: 10px 0;
+      }
+      .product-card p {
+          font-size: 16px;
+          color: #333;
+      }
+      .add-to-cart {
+          background-color: #4A90E2;
+          color: white;
+          padding: 10px 15px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.2s;
+      }
+      .add-to-cart:hover {
+          background-color: #354ebd;
+      }
+      @media (max-width: 1024px) {
+          .products-grid {
+              grid-template-columns: repeat(2, 1fr);
+              padding: 0 10px;
+          }
+      }
+      @media (max-width: 600px) {
+          .products-grid {
+              grid-template-columns: 1fr;
+              padding: 0 10px;
+              margin: 0 0 20px 0 !important;
+          }
+      }
+
+  </style>
+  <body>
+      <header class="header">
+          <div class="container screen">
+              <a href="index.html" class="logo dancing-script">E-Mine</a>
+              <div class="show-desktop">
+                  <nav class="nav-links dancing-script">
+                      <a href="index.html">Home</a>
+                      <a href="#" class="page">Shop</a>
+                      <a href="about.html">About</a>
+                      <a href="about.html"></a>
+                  </nav>
+
+                  <div class="profile">
+                    <img src="img/profile.png"  class="profile-image" onclick="goToProfile()">
+                  </div>
+
+                  <div class="actions">
+                      <input type="text" placeholder="Search..." class="search desktop-search" />
+                      <button class="search-btn desktop-search-btn">Search</button>
+                      <a href="cart.html" class="cart">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h13.2M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+                        </svg>
+                        <span id="cart-count">0</span>
+                    </a>                    
+                  </div>
+              </div>
+              <button id="hamburger" class="hamburger">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </button>
+              <div id="mobile-menu" class="mobile-menu">
+                  <nav class="nav-link dancing-script">
+                      <a href="index.html">Home</a>
+                      <a href="#" class="page">Shop</a>
+                      <a href="about.html">About</a>
+                      <a href="about.html"></a>
+                  </nav>
+
+                  <div class="profile">
+                    <img src="img/profile.png"  class="profile-image" onclick="goToProfile()">
+                  </div>
+
+                  <div class="actions">
+                      <input type="text" placeholder="Search..." class="search mobile-search" />
+                      <button class="search-btn mobile-search-btn">Search</button>
+                      <a href="cart.html" class="cart">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h13.2M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+                        </svg>
+                        <span id="cart-count2">0</span>
+                    </a>                    
+                  </div>
+              </div>
+          </div>
+      </header>
+      
+      <section class="hero">
+        <div class="screen">
+          <h2>Discover Amazing Deals!</h2>
+          <p>Shop the latest trends and enjoy unbeatable discounts.</p>
+          <a href="shop.html" style="text-decoration: underline;"><h1>Our Products</h1></a>
+        </div>
+      </section>
+
+      <main class="shop">
+        <div class="loader-div" id="loader">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div class="screen">
+              <div id="products-container" class="products-grid"></div>
+          </div>
+      </main>
+
+      <footer class="footer">
+          <div class="screen">
+              <p>&copy; 2024 E-Mine. All rights reserved.</p>
+              <div class="social-links">
+                  <a href="#">Facebook</a>
+                  <a href="#">LinkedIn</a>
+                  <a href="#">Twitter</a>
+              </div>
+          </div>
+      </footer>
+
+      <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const productsContainer = document.getElementById('products-container');
+        const desktopSearchInput = document.getElementsByClassName('desktop-search')[0];
+        const mobileSearchInput = document.getElementsByClassName('mobile-search')[0];
+        const desktopSearchButton = document.getElementsByClassName('desktop-search-btn')[0];
+        const mobileSearchButton = document.getElementsByClassName('mobile-search-btn')[0];
+        let products = [];
+        
+        updateCartCount();
+        
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            hamburger.setAttribute(
+                'aria-label',
+                mobileMenu.classList.contains('open') ? 'Close Menu' : 'Open Menu'
+            );
+        });
+        
+        const loader = document.getElementById('loader'); 
+        
+        fetch('https://fakestoreapi.com/products')
+            .then(response => response.json())
+            .then(data => {
+                products = data;
+                displayProducts(products);
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+                productsContainer.innerHTML = '<p>Failed to load products. Please try again later.</p>';
+            });
+        
+            function displayProducts(products) {
+                productsContainer.innerHTML = products
+                    .map(
+                        (product) => `
+                        <div class="product-card">
+                            <img src="${product.image}" alt="${product.title}" />
+                            <h2>${product.title}</h2>
+                            <p>$${product.price}</p>
+                            <button class="add-to-cart" 
+                                data-id="${product.id}" 
+                                data-title="${product.title}" 
+                                data-price="${product.price}" 
+                                data-image="${product.image}">
+                                Add to Cart
+                            </button>
+                        </div>
+                    `
+                    )
+                    .join('');
+                loader.style.display = 'none';
+            }
+
+            function btnLoader(button) {
+                button.textContent = 'Adding to cart...';
+                button.disabled = true;
+            }
+
+            function resetButton(button) {
+                button.textContent = 'Add to Cart';
+                button.disabled = false;
+            }
+
+            productsContainer.addEventListener('click', (event) => {
+                if (event.target.classList.contains('add-to-cart')) {
+                    const button = event.target;
+                    const id = button.getAttribute('data-id');
+                    const title = button.getAttribute('data-title');
+                    const price = parseFloat(button.getAttribute('data-price'));
+                    const image = button.getAttribute('data-image');
+                    addToCart(id, title, price, image);
+
+                    btnLoader(button);
+
+                    setTimeout(() => {
+                        resetButton(button);
+                        addToCart(id, title, price, image);
+                        alert(`${title} has been added to your cart!`);
+                    }, 500); 
+                    }
+                }
+            );
+
+            function addToCart(id, title, price, image) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingItem = cart.find((item) => item.id === id);
+
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ id, title, price, image, quantity: 1 });
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();                
+            }
+
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('cart-count2').textContent = totalItems;
+        }
+        
+        function handleSearch(searchInput) {
+            const searchValue = searchInput.value.trim().toLowerCase();
+            if (searchValue === '') {
+                alert('Please enter a search query');
+            } else {
+                const queryResult = products.filter(product =>
+                    product.title.toLowerCase().includes(searchValue)
+                );
+                displayProducts(queryResult);
+            }
+        }
+        
+        desktopSearchButton.addEventListener('click', () => handleSearch(desktopSearchInput));
+        mobileSearchButton.addEventListener('click', () => handleSearch(mobileSearchInput));
+
+        fetch('https://fakestoreapi.com/products/6',{
+            method:"DELETE"
+        })
+            .then(res=>res.json())
+            .then(json=>console.log(json))
+
+        
+        function goToProfile() {
+          window.location.href = 'profile.html';
+        }
+
+        fetch('https://fakestoreapi.com/products/7',{
+            method:"PUT",
+            body:JSON.stringify(
+                {
+                    title: 'Mens Cotton Jacket',
+                    price: 55.99,
+                    description: `https://fakestoreapi.com/products/7_description`,
+                    image: `https://fakestoreapi.com/products/7_img`,
+                    category: "men's clothing"
+                }
+            )
+        })
+            .then(res=>res.json())
+            .then(json=>console.log(json))
+
+        fetch('https://fakestoreapi.com/products',{
+            method:"POST",
+            "content_type" : "json/application",
+            body:JSON.stringify(
+                {
+                    title: 'Samsung Galaxy Note 10 plus',
+                    price: 300.30,
+                    description: 'Galaxy note series',
+                    image: 'https://www.google.com/imgres?q=galaxy%20note%20qo%20plus&imgurl=https%3A%2F%2Foshilolo.com%2Fwp-content%2Fuploads%2F2021%2F06%2Fsamsung-galaxy-note-10-plus-n975-dual-sim-256gb-silver.jpg&imgrefurl=https%3A%2F%2Foshilolo.com%2Fproduct%2Fsamsung-galaxy-note-10-256gb-8gb-sm-n975f-ds%2F&docid=2mp2fBIerC4TJM&tbnid=QasxZ0Iu277oXM&vet=12ahUKEwip-putlqCJAxUobEEAHcR0M0kQM3oECEkQAA..i&w=800&h=800&hcb=2&ved=2ahUKEwip-putlqCJAxUobEEAHcR0M0kQM3oECEkQAA',
+                    category: 'electronic'
+                }
+            )
+            })
+            .then(res=>res.json())
+            .then(json=>console.log(json))
+
+        
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

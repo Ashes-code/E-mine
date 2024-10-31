@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile | E-Mine</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #10b981;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .profile-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .profile-info {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .profile-img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 2px solid white;
+        object-fit: cover;
+      }
+
+      button {
+        width: 48%;
+        padding: 15px;
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+
+      button:hover {
+        background-color: #3578bd;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="profile-container">
+      <h2>Your Profile</h2>
+      <div style="display: flex; justify-content: center;">
+        <img
+          src="img/profile.png"
+          class="profile-img"
+          id="profile-img"
+          alt="Profile Image"
+        />
+      </div>
+      <div class="profile-info" id="profile-info">
+        <!-- User info will be dynamically loaded here -->
+      </div>
+      <a href="index.html"><button>Back to Home</button></a>
+      <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+      function loadUserProfile() {
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (user) {
+          const profileInfo = document.getElementById('profile-info');
+          const profileImage = document.getElementById('profile-img');
+
+          profileInfo.innerHTML = `
+            <div>
+                <p><strong>Name:</strong> ${user.name}</p>
+                <p><strong>Email:</strong> ${user.email}</p>
+                <p><strong>Account Created:</strong> ${new Date(user.createdAt).toDateString()}</p>
+            </div>
+          `;
+
+          if (user.image) {
+            profileImage.src = user.image;
+          }
+        } else {
+          alert('Please log in first.');
+          window.location.href = 'login.html';
+        }
+      }
+
+      function logout() {
+        localStorage.removeItem('user');
+        alert('You have been logged out!');
+        window.location.href = 'login.html';
+      }
+
+      // Load user profile on page load
+      window.onload = loadUserProfile;
+    </script>
+  </body>
+</html>

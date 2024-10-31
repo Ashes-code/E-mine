@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Mine Home | Discover Amazing Deals</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <header class="header">
+      <div class="container screen">
+        <a href="index.html" class="logo dancing-script">E-Mine</a>
+
+        <div class="show-desktop">
+          <nav class="nav-links dancing-script">
+            <a href="#" class="page">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="about.html">About</a>
+          </nav>
+
+          <div class="profile">
+            <img src="img/profile.png"  class="profile-image" onclick="goToProfile()">
+          </div>
+
+          <div class="actions">
+            <input type="text" placeholder="Search..." class="search" />
+            <button class="search-btn">Search</button>
+            <a href="cart.html" class="cart">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h13.2M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+              </svg>
+              <span id="cart-count">0</span>
+            </a>
+          </div>
+        </div>
+
+        <button id="hamburger" class="hamburger" aria-label="Open Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div id="mobile-menu" class="mobile-menu">
+          <nav class="nav-link">
+            <a href="#" class="page">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="about.html">About</a>
+            <a href="about.html"></a>
+          </nav>
+
+          <div class="profile">
+            <img src="img/profile.png"  class="profile-image" onclick="goToProfile()">
+          </div>
+
+          <div class="actions">
+            <input type="text" placeholder="Search..." class="search" />
+            <button class="search-btn">Search</button>
+            <a href="cart.html" class="cart">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h13.2M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+              </svg>
+              <span id="cart-count2">0</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div id="auth-modal" class="modal">
+      <div class="modal-content">
+          <p>Please <a href="login.html" id="login-link">Login</a> or <a href="signup.html" id="signup-link">Sign Up</a> to continue</p>
+          <button id="close-modal">Close</button>
+      </div>
+    </div>
+
+
+    <section class="hero">
+      <div class="screen">
+        <h2>Discover Amazing Deals!</h2>
+        <p>Shop the latest trends and enjoy unbeatable discounts.</p>
+        <a href="shop.html" class="button">Start Shopping</a>
+      </div>
+    </section>
+
+    <main class="categories screen">
+      <h1>Shop by Category</h1>
+      <div class="loader-div" id="loader">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div id="category-container" class="category-container"></div>
+    </main>
+
+    <footer class="footer">
+      <div class="screen">
+        <p>&copy; 2024 E-Mine. All rights reserved.</p>
+        <div class="social-links">
+          <a href="#">Facebook</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const productsContainer = document.getElementById('products-container');
+      const searchInput = document.getElementsByClassName('search')[0];
+      const searchButton = document.getElementsByClassName('search-btn')[0];
+      let products = [];
+
+      const isLoggedIn = localStorage.getItem('loggedIn');
+
+      const authModal = document.getElementById('auth-modal');
+      const closeModalButton = document.getElementById('close-modal');
+      updateCartCount();
+
+      window.addEventListener('load', () => {
+          if (!isLoggedIn) {
+              authModal.style.display = 'flex';
+          }
+      });
+
+      closeModalButton.addEventListener('click', () => {
+          authModal.style.display = 'none';
+      });
+
+      document.getElementById('login-link').addEventListener('click', () => {
+          localStorage.setItem('loggedIn', 'true');
+      });
+
+      document.getElementById('signup-link').addEventListener('click', () => {
+          localStorage.setItem('loggedIn', 'true');
+      });
+
+      function goToProfile() {
+          window.location.href = 'profile.html';
+      }
+
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            hamburger.setAttribute(
+                'aria-label',
+                mobileMenu.classList.contains('open') ? 'Close Menu' : 'Open Menu'
+            );
+        });
+
+        searchButton.addEventListener('click', () => {
+            const searchValue = searchInput.value.trim().toLowerCase();
+            if (searchValue === '') {
+                alert('Please enter a search query');
+            } else if(searchValue !==  products){
+              productsContainer.innerHTML = `<p style="color: red; font-size: 20px; text-align: center; width: 100%;">No product matches your search query</p>`
+            }else {
+              const queryResult = products.filter(product => 
+                  product.title.toLowerCase().includes(searchValue)
+              );
+              displayProducts(queryResult);
+            }
+        });
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('cart-count2').textContent = totalItems;
+        }
+
+          const loader = document.getElementById('loader'); 
+          const categoryContainer = document.getElementById('category-container');
+
+          fetch('https://fakestoreapi.com/products/categories')
+            .then((response) => response.json())
+            .then((categories) => {
+              displayCategories(categories);
+            })
+            .catch((error) => {
+              console.error('Error fetching categories:', error);
+              categoryContainer.innerHTML = '<p>Failed to load categories. Please try again later.</p>';
+            });
+
+          function displayCategories(categories) {
+            const categoryImages = {
+              electronics: 'img/electronics.png',
+              jewelery: 'img/jewelry.png',
+              "men's clothing": 'img/mens-clothing.png',
+              "women's clothing": 'img/womens-clothing.png',
+            };
+
+            categoryContainer.innerHTML = categories
+              .map(
+                (category) => `
+                  <div class="category-card" onclick="goToCategory()">
+                    <img src="${categoryImages[category]}" alt="${category}" />
+                    <h2>${category}</h2>
+                  </div>
+                `
+              )
+              .join('');
+            loader.style.display = 'none';
+          }
+
+        function goToCategory(category) {
+          window.location.href = 'shop.html';
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  </body>
+</html>
