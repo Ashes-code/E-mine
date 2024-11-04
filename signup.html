@@ -117,17 +117,14 @@
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // Get form values
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
             const errorElement = document.getElementById('error');
 
-            // Clear previous error
             errorElement.textContent = '';
             
-            // Password validation
             if (password !== confirmPassword) {
                 errorElement.textContent = 'Passwords do not match.';
                 document.getElementById('password').style.borderColor = 'red';
@@ -135,7 +132,6 @@
                 return;
             }
 
-            // Store user in localStorage
             const user = { 
                 name, 
                 email, 
@@ -143,8 +139,6 @@
                 createdAt: new Date().toISOString() 
             };
             localStorage.setItem('user', JSON.stringify(user));
-
-            // Redirect on success
             alert('Signup successful! Redirecting to home page...');
             window.location.href = 'index.html';
         });
